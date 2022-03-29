@@ -1,0 +1,27 @@
+{
+    "users": [
+      {
+        "username": "incrediblerafa",
+        "email": "rafa@mail.com",
+        "password": "Password123",
+        "picture": "require(`../Supports/Assets/Profile Pics/rafael-cerqueira.jpeg`)",
+        "name": "Rafael Cerqueira",
+        "bio": "Go extreme. There's no turning back! \n Architect • Photographer • DOP • Journalist",
+        "posts": [
+            {
+                "image": "require(`../Supports/Assets/Posts/Rafael-Cerqueira/pexels-rafael-cerqueira-4737454.jpg`)",
+                "caption": "Beautiful sunset",
+                "number-of-likes": 0,
+                "liked-by-user": false,
+                "date-created": "13 March 2022",
+                "comments": [
+
+                ]
+                
+            }
+        ],
+        "liked-posts": [],
+        "id": 1
+      }
+    ]
+}
