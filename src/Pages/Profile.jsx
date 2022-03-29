@@ -1,12 +1,27 @@
 import React from 'react';
 import Navpane from '../Components/Navpane';
 import CommentsWhite from '../Supports/Assets/Icons/Chat/chat.png'
+import EditIcon from '../Supports/Assets/Icons/User Interface/Pencil.svg'
 
 function Profile(props) {
     return (
         <div className='d-flex'>
            <Navpane />
            <div className='page-container'>
+                <div id='profile-header-container'>
+                    <div className='d-flex'>
+                        <img id='profile-pic' src={require(`../Supports/Assets/Profile Pics/rafael-cerqueira.jpeg`)} alt="rafael-cerqueira" />
+                        <div id='profile-name-container' className='d-flex flex-column justify-content-center'>
+                            <p id='profile-username'>incrediblerafa</p>
+                            <p id='profile-name'>Rafael Cerqueira</p>
+                        </div>
+                    </div>
+                    <div id='profile-bio-container'>
+                        <p className='profile-bio'>Go extreme. There's no turning back!</p>
+                        <p className='profile-bio'>Architect • Photographer • DOP • Journalist</p>
+                        <button className='edit-profile-button'>Edit profile</button>
+                    </div>
+                </div>
                 <div className='home-post-container'>
                     <div style={{position: "relative", width: "100%"}}>
                         <img className='home-post-picture' src={require(`../Supports/Assets/Posts/Rafael-Cerqueira/pexels-rafael-cerqueira-4737454.jpg`)} alt="sunset" />

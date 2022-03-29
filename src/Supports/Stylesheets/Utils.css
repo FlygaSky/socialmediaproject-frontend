@@ -177,6 +177,7 @@ h5,
 h6 {
   font-family: "Poppins", sans-serif;
   position: relative;
+  color: var(--main-dark);
 }
 
 p {
@@ -500,6 +501,55 @@ p {
 }
 
 /* ###PROFILE */
+#profile-header-container {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  margin: -2vw 2.5% 2.5% 2.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 2px solid #3b3f3e;
+}
+
+#profile-pic {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  margin: 0px 20px 0px 0px;
+}
+
+#profile-name-container {
+  height: 100%;
+}
+
+#profile-username {
+  margin: 0px 20px 0px 0px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+#profile-name {
+  margin: 0px 20px 0px 0px;
+  font-size: 18px;
+}
+
+#profile-bio-container {
+  padding: 10px;
+  text-align: center;
+}
+.profile-bio {
+  margin: 0px 20px 0px 20px;
+  font-size: 14px;
+}
+
+.edit-profile-button {
+  border: none;
+  background-color: var(--light-grey);
+  margin: 10px;
+  padding: 0px 10px;
+}
+
 .post-overlay {
   background-color: #00000088;
   width: 100%;
