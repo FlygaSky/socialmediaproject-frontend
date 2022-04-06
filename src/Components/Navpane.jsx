@@ -19,9 +19,6 @@ function Navpane(props) {
                 <img src={SearchIcon} alt="search" id='search-icon' />
                 <input type="text" placeholder='Search in Upperture' id="search-input" />
             </div>
-            <div className='menu-container' id='menu-container-search'>
-                <img src={SearchIcon} alt="search" id='search-icon-small-window' className='menu-icon' />
-            </div>
             <div className='menu-container selected-menu'>
                 <img src={HomeIcon} alt="home" className='menu-icon' />
                 <p className='menu-text'>Home</p>
@@ -44,12 +41,12 @@ function Navpane(props) {
             </div>
             <button id='upload-button'>Upload</button>
             <button id='upload-button-small'><img src={UploadIcon} alt="upload" className='menu-icon' /></button>
-            <div className='upperture-footer d-flex mt-4'>
+            <div className='upperture-footer mt-4'>
                 <span className='upperture-dark-grey upperture-font-size-10 mb-0 mx-2'>Terms of Service</span>
                 <span className='upperture-dark-grey upperture-font-size-10 mb-0 mx-2'>Privacy Policy</span>
                 <span className='upperture-dark-grey upperture-font-size-10 mb-0 mx-2'>Cookie Policy</span>
             </div>
-            <div className='upperture-footer d-flex'>
+            <div className='upperture-footer'>
                 <span className='upperture-dark-grey upperture-font-size-10 mb-0 mx-2'>Cookie Policy</span>
                 <span className='upperture-dark-grey upperture-font-size-10 mb-0 mx-2'>Accessibility</span>
                 <span className='upperture-dark-grey upperture-font-size-10 mb-0 mx-2'>Ads info</span>

@@ -1,10 +1,12 @@
 import React from 'react';
 import LogoNoText from '../Supports/Assets/Icons/camera-icon.png'
+import CloseIcon from '../Supports/Assets/Icons/User Interface/Close.svg'
 
 function RegisterModal(props) {
     return (
         <div id='register-modal-container'>
             <div id='register-modal'>
+                <img className='upperture-close-icon' src={CloseIcon} alt="close" />
                 <img id='upperture-logo-register-no-text' src={LogoNoText} alt="logo" />
                 <p id='create-your-account'>Create your account</p>
                 <input className='upperture-input' type="text" placeholder='Username'/>

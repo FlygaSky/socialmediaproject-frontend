@@ -4,6 +4,7 @@ import Navpane from "./Components/Navpane";
 import LandingPage from "./Pages/LandingPage";
 import Home from "./Pages/Home"
 import Profile from "./Pages/Profile"
+import PostDetail from "./Pages/PostDetail"
 import { keepLoginAction } from "./redux/actions/userActions";
 import { useDispatch } from "react-redux";
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/detail" element={<PostDetail />} />
         </Routes>
     </div>
   );

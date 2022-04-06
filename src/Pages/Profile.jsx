@@ -1,12 +1,17 @@
 import React from 'react';
+import EditProfile from '../Components/EditProfile';
 import Navpane from '../Components/Navpane';
 import CommentsWhite from '../Supports/Assets/Icons/Chat/chat.png'
-import EditIcon from '../Supports/Assets/Icons/User Interface/Pencil.svg'
 
 function Profile(props) {
+    const [openEditProfile, setOpenEditProfile] = React.useState(false)
+    
     return (
         <div className='d-flex'>
            <Navpane />
+           {
+               openEditProfile && <EditProfile modalOpen={openEditProfile} setModalOpen={setOpenEditProfile} />
+           }
            <div className='page-container'>
                 <div id='profile-header-container'>
                     <div className='d-flex'>
@@ -19,7 +24,8 @@ function Profile(props) {
                     <div id='profile-bio-container'>
                         <p className='profile-bio'>Go extreme. There's no turning back!</p>
                         <p className='profile-bio'>Architect • Photographer • DOP • Journalist</p>
-                        <button className='edit-profile-button'>Edit profile</button>
+                        <button className='edit-profile-button'
+                        onClick={() => setOpenEditProfile(true)}>Edit profile</button>
                     </div>
                 </div>
                 <div className='home-post-container'>
