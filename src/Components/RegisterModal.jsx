@@ -4,9 +4,9 @@ import CloseIcon from '../Supports/Assets/Icons/User Interface/Close.svg'
 
 function RegisterModal(props) {
     return (
-        <div id='register-modal-container'>
-            <div id='register-modal'>
-                <img className='upperture-close-icon' src={CloseIcon} alt="close" />
+        <div id='register-modal-container' onClick={() => props.setModalOpen(false)}>
+            <div id='register-modal' onClick={e => {e.stopPropagation()}}>
+                <img className='upperture-close-icon upperture-pointer' src={CloseIcon} alt="close"  onClick={() => props.setModalOpen(false)}/>
                 <img id='upperture-logo-register-no-text' src={LogoNoText} alt="logo" />
                 <p id='create-your-account'>Create your account</p>
                 <input className='upperture-input' type="text" placeholder='Username'/>

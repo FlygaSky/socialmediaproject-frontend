@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import EditProfile from '../Components/EditProfile';
 import Navpane from '../Components/Navpane';
 import CommentsWhite from '../Supports/Assets/Icons/Chat/chat.png'
@@ -6,6 +7,11 @@ import CommentsWhite from '../Supports/Assets/Icons/Chat/chat.png'
 function Profile(props) {
     const [openEditProfile, setOpenEditProfile] = React.useState(false)
     
+    const linkStyle = {
+        textDecoration: 'none',
+        display: 'inline'
+      };
+
     return (
         <div className='d-flex'>
            <Navpane />
@@ -93,19 +99,23 @@ function Profile(props) {
                         </div>
                     </div>
                 </div>
+                
                 <div className='home-post-container'>
                     <div style={{position: "relative", width: "100%"}}>
-                        <img className='home-post-picture' src={require(`../Supports/Assets/Posts/Rafael-Cerqueira/pexels-rafael-cerqueira-4737459.jpg`)} alt="sunset" />
-                        <div className='post-overlay'>
-                            <div className='d-flex justify-content-center align-items-center'>
-                                <img className='heart-white' src={require(`../Supports/Assets/Icons/User Interface/HeartWhite.png`)} alt="heart" />
-                                <p className='number-of-likes-comments-white'>3</p>
-                                <img className='comment-white' src={CommentsWhite} alt="comments" />
-                                <p className='number-of-likes-comments-white'>0</p>
+                        <Link to='/detail' style={linkStyle}>
+                            <img className='home-post-picture' src={require(`../Supports/Assets/Posts/Rafael-Cerqueira/pexels-rafael-cerqueira-4737459.jpg`)} alt="sunset" />
+                            <div className='post-overlay'>
+                                <div className='d-flex justify-content-center align-items-center'>
+                                    <img className='heart-white' src={require(`../Supports/Assets/Icons/User Interface/HeartWhite.png`)} alt="heart" />
+                                    <p className='number-of-likes-comments-white'>3</p>
+                                    <img className='comment-white' src={CommentsWhite} alt="comments" />
+                                    <p className='number-of-likes-comments-white'>0</p>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     </div>
                 </div>
+
            </div>
         </div>
     );

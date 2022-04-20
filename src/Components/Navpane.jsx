@@ -8,9 +8,15 @@ import HeartOutlineIcon from '../Supports/Assets/Icons/User Interface/HeartOutli
 import BellIcon from '../Supports/Assets/Icons/User Interface/Bell.svg'
 import SettingIcon from '../Supports/Assets/Icons/User Interface/Setting.svg'
 import UploadIcon from '../Supports/Assets/Icons/User Interface/Upload.svg'
+import { NavLink } from 'react-router-dom';
 
 
 function Navpane(props) {
+    const navLinkStyle = {
+        textDecoration: 'none',
+        width: '100%'
+      };
+
     return (
         <div id='navpane-container'>
             <img src={LogoText} alt="logo" id='upperture-logo-navpane-text' />
@@ -19,26 +25,34 @@ function Navpane(props) {
                 <img src={SearchIcon} alt="search" id='search-icon' />
                 <input type="text" placeholder='Search in Upperture' id="search-input" />
             </div>
-            <div className='menu-container selected-menu'>
-                <img src={HomeIcon} alt="home" className='menu-icon' />
-                <p className='menu-text'>Home</p>
-            </div>
-            <div className='menu-container'>
-                <img src={ProfileIcon} alt="home" className='menu-icon' />
-                <p className='menu-text'>Profile</p>
-            </div>
-            <div className='menu-container'>
-                <img src={HeartOutlineIcon} alt="like" className='menu-icon' />
-                <p className='menu-text'>Liked posts</p>
-            </div>
+            <NavLink to="/home" style={navLinkStyle} className={(navData) => navData.isActive ? "selected-menu" : "" }>
+                <div className='menu-container'>
+                    <img src={HomeIcon} alt="home" className='menu-icon' />
+                    <p className='menu-text'>Home</p>
+                </div>
+            </NavLink>
+            <NavLink to="/profile" style={navLinkStyle} className={(navData) => navData.isActive ? "selected-menu" : "" }>
+                <div className='menu-container'>
+                    <img src={ProfileIcon} alt="home" className='menu-icon' />
+                    <p className='menu-text'>Profile</p>
+                </div>
+            </NavLink>
+            <NavLink to="/liked-posts" style={navLinkStyle} className={(navData) => navData.isActive ? "selected-menu" : "" }>
+                <div className='menu-container'>
+                    <img src={HeartOutlineIcon} alt="like" className='menu-icon' />
+                    <p className='menu-text'>Liked posts</p>
+                </div>
+            </NavLink>
             <div className='menu-container'>
                 <img src={BellIcon} alt="like" className='menu-icon' />
                 <p className='menu-text'>Notifications</p>
             </div>
-            <div className='menu-container'>
-                <img src={SettingIcon} alt="like" className='menu-icon' />
-                <p className='menu-text'>Settings</p>
-            </div>
+            <NavLink to="/settings" style={navLinkStyle} className={(navData) => navData.isActive ? "selected-menu" : "" }>
+                <div className='menu-container'>
+                    <img src={SettingIcon} alt="like" className='menu-icon' />
+                    <p className='menu-text'>Settings</p>
+                </div>
+            </NavLink>
             <button id='upload-button'>Upload</button>
             <button id='upload-button-small'><img src={UploadIcon} alt="upload" className='menu-icon' /></button>
             <div className='upperture-footer mt-4'>
