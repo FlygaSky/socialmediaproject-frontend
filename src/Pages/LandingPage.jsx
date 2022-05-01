@@ -3,9 +3,40 @@ import '../Supports/Stylesheets/Utils.css'
 import Logo from '../Supports/Assets/Icons/Upperture Logo.svg'
 import GoogleLogo from '../Supports/Assets/Icons/Brands/GoogleLogo.png'
 import RegisterModal from '../Components/RegisterModal'
+import ShowPassword from '../Supports/Assets/Icons/User Interface/ShowPassword.png'
+import HidePassword from '../Supports/Assets/Icons/User Interface/HidePassword.png'
+import {
+    Formik,
+    Form,
+    Field,
+    ErrorMessage
+  } from 'formik'
+  import * as Yup from 'yup'
+
+  const initialValues = {
+    usernameOrEmail: '',
+    password: '',
+  }
+  
+  const onSubmit = (values, submitProps) => {
+    console.log('Form data', values)
+    console.log('submitProps', submitProps)
+    submitProps.setSubmitting(false)
+    submitProps.resetForm()
+  }
+  
+  const validationSchema = Yup.object({
+    usernameOrEmail: Yup
+        .string()
+        .required('This field is required'),
+    password: Yup
+        .string()
+        .required('This field is required')
+  })
 
 function LandingPage(props) {
     const [openRegister, setOpenRegister] = React.useState(false)
+    const [showPassword, setShowPassword] = React.useState(false);
 
     return (
         <div className='d-flex'>
@@ -14,22 +45,52 @@ function LandingPage(props) {
             }
             <div id='jumbotron' className='d-flex justify-content-center align-items-center'>
                 <div id='jumbotron-text-wrapper' className='d-flex justify-content-center align-items-center'>
-                <p id='jumbotron-text'>Upload and share your best moments.</p>
+                <p id='jumbotron-text'>Upload and share your memorable moments.</p>
                 </div>
             </div>
             <div id='login-pane'>
                 <img src={Logo} alt="logo" />
-                <div id='login-box'>
-                    <input className='upperture-input' type="text" placeholder='Username or email'/>
-                    <input className='upperture-input' type="text" placeholder='Password'/>
-                    <button className='upperture-submit-button'>Log in</button>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}
+                    enableReinitialize
+                    validateOnMount
+                    >
+                 {formik => {
+                    return (
+                <Form id='login-box'>
+                    <div className="upperture-form">
+                    <Field className='upperture-input' type="text" id='usernameOrEmail' name='usernameOrEmail' placeholder=' ' maxLength='320'/>
+                        <label className='upperture-input-label' htmlFor='usernameOrEmail'>Username or email</label>
+                        <ErrorMessage name='usernameOrEmail'>
+                            {error => <div className='upperture-error-message' style={{fontSize:'12px'}}>{error}</div>}
+                        </ErrorMessage>
+                    </div>
+                    <div className="upperture-form">
+                        <Field className='upperture-input upperture-password' type={showPassword ? "text" : "password"} id='password' name='password' placeholder=' ' maxLength='320'/>
+                        <label className='upperture-input-label' htmlFor='password'>Password</label>
+                        {
+                            showPassword ? 
+                            <img className='upperture-password-icon upperture-pointer' src={HidePassword} alt="hide" onClick={() => setShowPassword(false)}/>  :
+                            <img className='upperture-password-icon upperture-pointer' src={ShowPassword} alt="show" onClick={() => setShowPassword(true)}/> 
+                        }
+                        <ErrorMessage name='password'>
+                            {error => <div className='upperture-error-message' style={{fontSize:'12px'}}>{error}</div>}
+                        </ErrorMessage>
+                    </div>
+                    <button className='upperture-submit-button'
+                    type='submit'
+                    disabled={!formik.isValid || formik.isSubmitting}>
+                    Log in</button>
                     <div className='d-flex justify-content-center align-items-center'>
                         <img src={GoogleLogo} alt="Google" id='google-logo' className='upperture-pointer'/>
                         <p className='main-dark upperture-pointer' id='login-with-google'>Log in with Google</p>
                     </div>
-                    <p className='upperture-error-message'></p>
                     <p id='upperture-forgot-password' className='upperture-pointer'>Forgot password?</p>
-                </div>
+                </Form>
+                )}}
+            </Formik>
                 <div className='d-flex'>
                     <p className='upperture-main-dark upperture-font-size-18 upperture-font-weight-600'>Don't have an account?</p>
                     <p className='upperture-main-highlight upperture-font-size-18 ms-2 upperture-font-weight-600 upperture-pointer' onClick={() => setOpenRegister(true)}>Sign up</p>

@@ -26,12 +26,12 @@ function Settings(props) {
                             <span>{username.length}/20</span>
                         }
                     </div>
-                    <input className='upperture-input' type="text" value='incrediblerafa' onChange={usernameChange} maxLength={20}/>
+                    <input className='upperture-input my-2' type="text" defaultValue="incrediblerafa" onChange={usernameChange} maxLength={20}/>
                     <p className='mt-4 mb-0 upperture-main-dark'>Change password</p>
-                    <input className='upperture-input' type="password" placeholder='Old password'/>
-                    <input className='upperture-input' type="password" placeholder='New password'/>
-                    <input className='upperture-input' type="password" placeholder='Repeat new password'/>
-                    <p className='upperture-font-size-10 upperture-dark-grey mb-4'>Password should contain at least 8 characters including an uppercase letter, a symbol, and a number</p>
+                    <input className='upperture-input my-2' type="password" placeholder='Old password' maxLength={160}/>
+                    <input className='upperture-input my-2' type="password" placeholder='New password' maxLength={160}/>
+                    <input className='upperture-input my-2' type="password" placeholder='Repeat new password' maxLength={160}/>
+                    <p className='upperture-font-size-12 upperture-dark-grey mb-4'>Password should contain at least 8 characters including an uppercase letter, a lowercase letter, a symbol, and a number</p>
                     <p className='mt-0 mb-4 upperture-main-dark'>Forgot password?</p>
                     <button className='upperture-submit-button'>Save</button>
                 </div>

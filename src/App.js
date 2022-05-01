@@ -13,6 +13,8 @@ import { useDispatch } from "react-redux";
 // CSS
 import 'bootstrap/dist/css/bootstrap.css';
 import './Supports/Stylesheets/Utils.css'
+import Confirmation from "./Pages/Confirmation";
+import PageNotFound from "./Pages/PageNotFound";
 
 
 function App() {
@@ -30,11 +32,13 @@ function App() {
     <div>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/confirmation/:token" element={<Confirmation />} />
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/detail" element={<PostDetail />} />
           <Route path="/liked-posts" element={<LikedPosts />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
     </div>
   );
