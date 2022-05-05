@@ -1,18 +1,15 @@
 import axios from "axios";
 import { API_URL } from "../../Supports/Functions/helper";
 
-export const loginAction = (email, password) => {
+export const loginAction = (usernameOrEmail, password) => {
     return (dispatch) => {
-        axios.get(API_URL + `/users?email=${email}&password=${password}`)
+            axios.post(API_URL + '/user/login', {usernameOrEmail, password})
             .then((res) => {
-                // menyimpan data ke localstorage browser
-                console.log(res.data)
-                localStorage.setItem("tokenId", res.data[0].id);
+                localStorage.setItem("myTkn", res.data.myTkn);
 
-                // Menyimpan data kereducer
                 dispatch({
                     type: "LOGIN_SUCCESS",
-                    payload: res.data[0]
+                    payload: res.data
                 })
             }).catch((err) => {
                 console.log(err)
@@ -23,14 +20,14 @@ export const loginAction = (email, password) => {
 export const keepLoginAction = () => {
     return async(dispatch) => {
         try{
-            let tokenId = localStorage.getItem("tokenId")
-            if (tokenId) {
-                let res = await axios.get(API_URL + `/users?id=${tokenId}`)
-                localStorage.setItem("tokenId", res.data[0].id);
+            let myTkn = localStorage.getItem("myTkn")
+            if (myTkn) {
+                let res = await axios.post(API_URL + '/user/login')
+                localStorage.setItem("myTkn", res.data.myTkn);
 
                 dispatch({
                     type: "LOGIN_SUCCESS",
-                    payload: res.data[0]
+                    payload: res.data
                 })
             }
         }catch (error) {
@@ -39,15 +36,8 @@ export const keepLoginAction = () => {
     }
 }
 export const logoutAction = () => {
-    localStorage.removeItem("tokenId");
+    localStorage.removeItem("myTkn");
     return {
         type: "LOGOUT"
-    }
-}
-
-export const updateCart = (dataCart) => {
-    return {
-        type: "UPDATE_CART",
-        payload: dataCart
     }
 }

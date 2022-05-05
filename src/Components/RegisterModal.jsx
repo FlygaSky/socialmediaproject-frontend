@@ -40,7 +40,7 @@ function RegisterModal(props) {
                     text: res.data.message,
                     icon: 'success',
                     confirmButtonText: 'Okay!',
-                    confirmButtonColor: '#2ef3b8'
+                    confirmButtonColor: '#369a7c'
                 })
             })
             .catch((err) => {

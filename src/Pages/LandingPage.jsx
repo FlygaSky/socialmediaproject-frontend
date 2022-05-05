@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../Supports/Stylesheets/Utils.css'
 import Logo from '../Supports/Assets/Icons/Upperture Logo.svg'
 import GoogleLogo from '../Supports/Assets/Icons/Brands/GoogleLogo.png'
@@ -12,31 +12,53 @@ import {
     ErrorMessage
   } from 'formik'
   import * as Yup from 'yup'
-
-  const initialValues = {
-    usernameOrEmail: '',
-    password: '',
-  }
-  
-  const onSubmit = (values, submitProps) => {
-    console.log('Form data', values)
-    console.log('submitProps', submitProps)
-    submitProps.setSubmitting(false)
-    submitProps.resetForm()
-  }
-  
-  const validationSchema = Yup.object({
-    usernameOrEmail: Yup
-        .string()
-        .required('This field is required'),
-    password: Yup
-        .string()
-        .required('This field is required')
-  })
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAction } from '../redux/actions/userActions';
+import { Navigate } from 'react-router-dom';
 
 function LandingPage(props) {
     const [openRegister, setOpenRegister] = React.useState(false)
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showPassword, setShowPassword] = React.useState(false)
+    const [redirect, setRedirect] = React.useState(false)
+
+    const dispatch = useDispatch()
+    const {username, email} = useSelector(state => state.userReducer)
+    console.log(username, email)
+
+    const initialValues = {
+        usernameOrEmail: '',
+        password: '',
+      }
+      
+      const onSubmit = (values, submitProps) => {
+        // console.log(submitProps.setSubmitting)
+        // submitProps.setSubmitting(true)
+        let usernameOrEmail = values.usernameOrEmail
+        let password = values.password
+        dispatch(loginAction(usernameOrEmail, password))
+        // submitProps.setSubmitting(false)
+        submitProps.resetForm()
+      }
+    
+    useEffect(() => {
+        if(localStorage.getItem("myTkn")) {
+            setRedirect(true)
+        }
+    }, [username])
+    
+    if(redirect){
+        return(  
+            <Navigate to='/home' />
+        )
+    }
+      const validationSchema = Yup.object({
+        usernameOrEmail: Yup
+            .string()
+            .required('This field is required'),
+        password: Yup
+            .string()
+            .required('This field is required')
+      })
 
     return (
         <div className='d-flex'>
@@ -58,6 +80,7 @@ function LandingPage(props) {
                     validateOnMount
                     >
                  {formik => {
+                     console.log(formik.isValid + 'ini issubmitting ->' + formik.isSubmitting)
                     return (
                 <Form id='login-box'>
                     <div className="upperture-form">
@@ -81,7 +104,8 @@ function LandingPage(props) {
                     </div>
                     <button className='upperture-submit-button'
                     type='submit'
-                    disabled={!formik.isValid || formik.isSubmitting}>
+                    disabled={!formik.isValid || formik.isSubmitting}
+                    onClick={() => onSubmit()}>
                     Log in</button>
                     <div className='d-flex justify-content-center align-items-center'>
                         <img src={GoogleLogo} alt="Google" id='google-logo' className='upperture-pointer'/>

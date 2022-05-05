@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
-import { useParams, Navigate } from 'react-router-dom'
-
+import { useParams, Navigate, NavLink } from 'react-router-dom'
 // SweetAlert
 import Swal from 'sweetalert2';
 import { API_URL } from '../Supports/Functions/helper';
@@ -40,7 +39,7 @@ const Confirmation = () => {
                 icon: 'success',
                 title: res.data.message
             })
-            setIsRedirect(true)
+            setTimeout(() => setIsRedirect(true), 5000)
             localStorage.setItem('myTkn', params.token)
         })
         .catch((err) => {
@@ -59,16 +58,24 @@ const Confirmation = () => {
     }
 
     return(
-        <div className="container">
+        <div style={{width: "100vw", height: "100vh", backgroundColor: "#effffa"}}>
             <div className="row justify-content-center align-items-center" style={{height: '100vh'}}>
-                <div className="col-5 text-center border border-primary px-5 py-5 rounded">
+                <div className="col-4 text-center border border-dark px-5 py-5 rounded">
                         {
                             message ? 
-                            <h1>{message}</h1> : 
+                            <div>
+                                <h1>{message}</h1>
+                                <br/>
+                                <NavLink to="/home" style={{textDecoration: "none"}}>
+                                    <h4 style={{color: "#2ef3b8"}}>Go back to home</h4>
+                                </NavLink>
+                            </div>
+                             : 
                             <div>
                                 <h1>Welcome to Upperture!</h1>
                                 <p style={{fontSize: '20px'}}>
-                                    Enjoy your stay                                </p>
+                                    You will be redirected to Upperture's home page. Enjoy your stay :D
+                                </p>
                             </div>
                         }
                 </div>
