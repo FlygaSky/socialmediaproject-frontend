@@ -3,9 +3,12 @@ import Axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import { API_URL } from '../Supports/Functions/helper';
 import Swal from 'sweetalert2';
+import { useDispatch } from 'react-redux';
+import { logoutAction } from '../redux/actions/userActions';
 
 const Confirmation = () => {
     const [loading, setLoading] = React.useState(false);
+    const dispatch = useDispatch()
 
     const resendEmail = () => {    
         setLoading(true)
@@ -39,7 +42,7 @@ const Confirmation = () => {
                     </p>
                     <br/>
                     <NavLink to="/" style={{textDecoration: "none"}}>
-                        <h5 style={{color: "#2ef3b8"}}>Log in or sign up with another account</h5>
+                        <h5 style={{color: "#2ef3b8"}} onClick={() => dispatch(logoutAction())}>Log in or sign up with another account</h5>
                     </NavLink>
                     <button className='upperture-submit-button' disabled={loading ? true : false} onClick={resendEmail}>Resend verification email</button>
                 </div>

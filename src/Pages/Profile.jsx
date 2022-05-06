@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, Navigate } from 'react-router-dom';
 import EditProfile from '../Components/EditProfile';
 import Navpane from '../Components/Navpane';
 import CommentsWhite from '../Supports/Assets/Icons/Chat/chat.png'
@@ -11,7 +12,16 @@ function Profile(props) {
         textDecoration: 'none',
         display: 'inline'
       };
-
+    const {isVerified} = useSelector(state => state.userReducer)
+    if(!localStorage.getItem('myTkn')){
+        return(
+            <Navigate to='/' />
+        )
+    }else if(isVerified == 0) {
+        return(
+            <Navigate to='/unconfirmed' />
+        )
+    }
     return (
         <div className='d-flex'>
            <Navpane />

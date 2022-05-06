@@ -1,8 +1,20 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import Navpane from '../Components/Navpane';
 import PaperPlane from '../Supports/Assets/Icons/User Interface/Paper Plane.svg'
 
 function PostDetail(props) {
+    const {isVerified} = useSelector(state => state.userReducer)
+    if(!localStorage.getItem('myTkn')){
+        return(
+            <Navigate to='/' />
+        )
+    }else if(isVerified == 0) {
+        return(
+            <Navigate to='/unconfirmed' />
+        )
+    }
     return (
         <div className='d-flex'>
             <Navpane />

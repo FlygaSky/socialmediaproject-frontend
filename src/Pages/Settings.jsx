@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import Navpane from '../Components/Navpane';
 
 function Settings(props) {
@@ -8,6 +10,18 @@ function Settings(props) {
         let newUsername = event.target.value
         setUsername(newUsername)
     }
+
+    const {isVerified} = useSelector(state => state.userReducer)
+    if(!localStorage.getItem('myTkn')){
+        return(
+            <Navigate to='/' />
+        )
+    }else if(isVerified == 0) {
+        return(
+            <Navigate to='/unconfirmed' />
+        )
+    }
+
     return (
         <div className='d-flex'>
             <Navpane />

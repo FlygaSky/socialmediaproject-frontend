@@ -323,6 +323,7 @@ p {
 .upperture-submit-button[disabled]{
   background-color: #8deccf;
   color: var(--dark-grey);
+  cursor: not-allowed;
 }
 
 #google-logo {

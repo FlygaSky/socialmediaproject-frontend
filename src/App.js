@@ -8,7 +8,7 @@ import PostDetail from "./Pages/PostDetail"
 import Settings from "./Pages/Settings";
 import Unconfirmed from "./Pages/Unconfirmed"
 import { keepLoginAction } from "./redux/actions/userActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // CSS
 import 'bootstrap/dist/css/bootstrap.css';
@@ -19,6 +19,7 @@ import PageNotFound from "./Pages/PageNotFound";
 
 function App() {
   const dispatch = useDispatch();
+  const {username, isVerified} = useSelector(state => state.userReducer)
 
   const keepLogin = () => {
     dispatch(keepLoginAction());
@@ -26,6 +27,7 @@ function App() {
   
   React.useEffect(() => {
     keepLogin()
+    console.log('after keeplogin -> ' + username + isVerified)
   }, [])
 
   return (

@@ -1,7 +1,19 @@
 import React from 'react';
 import Navpane from '../Components/Navpane';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Home(props) {
+    const {isVerified} = useSelector(state => state.userReducer)
+    if(!localStorage.getItem('myTkn')){
+        return(
+            <Navigate to='/' />
+        )
+    }else if(isVerified == 0) {
+        return(
+            <Navigate to='/unconfirmed' />
+        )
+    }
     return (
         <div className='d-flex'>
             <Navpane />

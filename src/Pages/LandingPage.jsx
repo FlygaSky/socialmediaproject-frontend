@@ -22,8 +22,7 @@ function LandingPage(props) {
     const [redirect, setRedirect] = React.useState(false)
 
     const dispatch = useDispatch()
-    const {username, email} = useSelector(state => state.userReducer)
-    console.log(username, email)
+    const {loading, username, isVerified} = useSelector(state => state.userReducer)
 
     const initialValues = {
         usernameOrEmail: '',
@@ -31,7 +30,6 @@ function LandingPage(props) {
       }
       
       const onSubmit = (values, submitProps) => {
-        // console.log(submitProps.setSubmitting)
         // submitProps.setSubmitting(true)
         let usernameOrEmail = values.usernameOrEmail
         let password = values.password
@@ -47,10 +45,14 @@ function LandingPage(props) {
     }, [username])
     
     if(redirect){
-        return(  
-            <Navigate to='/home' />
-        )
+        console.log(username, isVerified)
+        if(isVerified == 0) {
+            return <Navigate to='/unconfirmed' />
+        } else if(isVerified == 1) {
+            return <Navigate to='/home' />
+        }
     }
+
       const validationSchema = Yup.object({
         usernameOrEmail: Yup
             .string()
@@ -80,7 +82,6 @@ function LandingPage(props) {
                     validateOnMount
                     >
                  {formik => {
-                     console.log(formik.isValid + 'ini issubmitting ->' + formik.isSubmitting)
                     return (
                 <Form id='login-box'>
                     <div className="upperture-form">
@@ -104,7 +105,7 @@ function LandingPage(props) {
                     </div>
                     <button className='upperture-submit-button'
                     type='submit'
-                    disabled={!formik.isValid || formik.isSubmitting}
+                    disabled={!formik.isValid || formik.isSubmitting || loading}
                     onClick={() => onSubmit()}>
                     Log in</button>
                     <div className='d-flex justify-content-center align-items-center'>

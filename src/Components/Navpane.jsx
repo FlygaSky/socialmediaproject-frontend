@@ -5,10 +5,12 @@ import SearchIcon from '../Supports/Assets/Icons/User Interface/Research.svg'
 import HomeIcon from '../Supports/Assets/Icons/User Interface/House.svg'
 import ProfileIcon from '../Supports/Assets/Icons/Users/account.svg'
 import HeartOutlineIcon from '../Supports/Assets/Icons/User Interface/HeartOutline.png'
-import BellIcon from '../Supports/Assets/Icons/User Interface/Bell.svg'
+import LogoutIcon from '../Supports/Assets/Icons/User Interface/Logout.svg'
 import SettingIcon from '../Supports/Assets/Icons/User Interface/Setting.svg'
 import UploadIcon from '../Supports/Assets/Icons/User Interface/Upload.svg'
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logoutAction } from '../redux/actions/userActions';
 
 
 function Navpane(props) {
@@ -16,6 +18,8 @@ function Navpane(props) {
         textDecoration: 'none',
         width: '100%'
       };
+    
+    const dispatch = useDispatch()
 
     return (
         <div id='navpane-container'>
@@ -43,15 +47,17 @@ function Navpane(props) {
                     <p className='menu-text'>Liked posts</p>
                 </div>
             </NavLink>
-            <div className='menu-container'>
-                <img src={BellIcon} alt="like" className='menu-icon' />
-                <p className='menu-text'>Notifications</p>
-            </div>
             <NavLink to="/settings" style={navLinkStyle} className={(navData) => navData.isActive ? "selected-menu" : "" }>
                 <div className='menu-container'>
                     <img src={SettingIcon} alt="like" className='menu-icon' />
                     <p className='menu-text'>Settings</p>
                 </div>
+            </NavLink>
+            <NavLink to="/" style={navLinkStyle} className={(navData) => navData.isActive ? "selected-menu" : "" }>
+            <div className='menu-container' onClick={() => dispatch(logoutAction())}>
+                <img src={LogoutIcon} alt="like" className='menu-icon' />
+                <p className='menu-text'>Log out</p>
+            </div>
             </NavLink>
             <button id='upload-button'>Upload</button>
             <button id='upload-button-small'><img src={UploadIcon} alt="upload" className='menu-icon' /></button>
