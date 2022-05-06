@@ -1,5 +1,6 @@
 const INITIAL_STATE={
-    loading: false,
+    loading:false,
+    error:null,
     id:null,
     username:"",
     email:"",
@@ -9,9 +10,11 @@ const INITIAL_STATE={
 export const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case "LOADING":
-            return {...state, loading: true}
+            return {...state, loading:true, error:null}
         case "DONE":
-            return {...state, loading: false}          
+            return {...state, loading:false, error:action.payload}
+        case "CLEAR_ERROR":
+            return {...state, error:null}
         case "LOGIN_SUCCESS":
             return { ...state, ...action.payload };
         case "LOGOUT":

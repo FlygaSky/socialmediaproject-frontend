@@ -7,14 +7,19 @@ export const loginAction = (usernameOrEmail, password) => {
             axios.post(API_URL + '/user/login', {usernameOrEmail, password})
             .then((res) => {
                 localStorage.setItem("myTkn", res.data.myTkn);
-
                 dispatch({
                     type: "LOGIN_SUCCESS",
                     payload: res.data
                 })
-                dispatch({ type: "DONE"})
+                dispatch({
+                    type: "DONE", 
+                    payload: null
+                })
             }).catch((err) => {
-                console.log(err)
+                dispatch({
+                    type: "DONE",
+                    payload: err.response.data.message
+                })
             })
     }
 }

@@ -110,7 +110,7 @@ function RegisterModal(props) {
                 <img className='upperture-close-icon upperture-pointer' src={CloseIcon} alt="close"  onClick={() => props.setModalOpen(false)}/>
                 <img id='upperture-logo-register-no-text' src={LogoNoText} alt="logo" />
                 <p id='create-your-account'>Create your account</p>
-                <div class="upperture-form">
+                <div className="upperture-form">
                     <Field className='upperture-input' type="text" id='username' name='username' placeholder=' ' maxLength='20'/>
                     <label className='upperture-input-label' htmlFor='username'>Username</label>
                     <ErrorMessage name='username'>

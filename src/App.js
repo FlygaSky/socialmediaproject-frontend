@@ -7,22 +7,40 @@ import LikedPosts from "./Pages/LikedPosts";
 import PostDetail from "./Pages/PostDetail"
 import Settings from "./Pages/Settings";
 import Unconfirmed from "./Pages/Unconfirmed"
+import Confirmation from "./Pages/Confirmation";
+import PageNotFound from "./Pages/PageNotFound";
 import { keepLoginAction } from "./redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { API_URL } from "../src/Supports/Functions/helper";
 
 // CSS
 import 'bootstrap/dist/css/bootstrap.css';
 import './Supports/Stylesheets/Utils.css'
-import Confirmation from "./Pages/Confirmation";
-import PageNotFound from "./Pages/PageNotFound";
 
 
 function App() {
   const dispatch = useDispatch();
   const {username, isVerified} = useSelector(state => state.userReducer)
 
-  const keepLogin = () => {
-    dispatch(keepLoginAction());
+  const keepLogin = async () => {
+      try {
+          let myTkn = localStorage.getItem("myTkn")
+          if (myTkn) {
+              let result = await axios.get(API_URL + '/user/keeplogin', {headers: {
+                  'authorization': myTkn,
+                  // 'Accept' : 'application/json',
+                  // 'Content-Type': 'application/json'
+              }})
+              console.log(result)
+              dispatch({
+                      type: "LOGIN_SUCCESS",
+                      payload: result.data
+                  })
+              }
+      } catch(err) {
+        console.log(err)
+    }
   }
   
   React.useEffect(() => {

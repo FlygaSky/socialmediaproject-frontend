@@ -22,7 +22,7 @@ function LandingPage(props) {
     const [redirect, setRedirect] = React.useState(false)
 
     const dispatch = useDispatch()
-    const {loading, username, isVerified} = useSelector(state => state.userReducer)
+    const {loading, username, isVerified, error} = useSelector(state => state.userReducer)
 
     const initialValues = {
         usernameOrEmail: '',
@@ -90,6 +90,7 @@ function LandingPage(props) {
                         <ErrorMessage name='usernameOrEmail'>
                             {error => <div className='upperture-error-message' style={{fontSize:'12px'}}>{error}</div>}
                         </ErrorMessage>
+                        {error == 'Account not found' ? <div className='upperture-error-message' style={{fontSize:'12px'}}>{error}</div> : ''}
                     </div>
                     <div className="upperture-form">
                         <Field className='upperture-input upperture-password' type={showPassword ? "text" : "password"} id='password' name='password' placeholder=' ' maxLength='320'/>
@@ -102,6 +103,7 @@ function LandingPage(props) {
                         <ErrorMessage name='password'>
                             {error => <div className='upperture-error-message' style={{fontSize:'12px'}}>{error}</div>}
                         </ErrorMessage>
+                        {error == 'Incorrect password' ? <div className='upperture-error-message' style={{fontSize:'12px'}}>{error}</div> : ''}
                     </div>
                     <button className='upperture-submit-button'
                     type='submit'
