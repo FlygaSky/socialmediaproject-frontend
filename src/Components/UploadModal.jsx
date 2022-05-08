@@ -42,8 +42,10 @@ function UploadModal(props) {
                 <img className='upperture-close-icon upperture-pointer' src={CloseIcon} alt="close"  onClick={() => dispatch(closeModal())}/>
                 <p style={{fontWeight:'bold', fontSize:'28px'}}>Create new post</p>
                 <img src={imageIcon} alt="" style={{height:'75px', marginBottom:'20px', filter: 'invert(22%) sepia(14%) saturate(129%) hue-rotate(114deg) brightness(96%) contrast(91%)'}} />
-                <input type="file" accept="image/*" id="image-input" style={{display: 'none'}} onChange={(e) => onImagesValidation(e)} />
-                <label for='image-input' style={{padding:'15px 30px', fontSize:'16px', backgroundColor:'#2ef3b8', borderRadius:'10px', cursor:'pointer', fontFamily: `"Poppins", sans-serif`}}>Choose your image</label>
+                <form method="POST" action="/upload" encType='multipart/form-data'>
+                    <input type="file" name='photo' accept="image/*" id="image-input" style={{display: 'none'}} onChange={(e) => onImagesValidation(e)} />
+                </form>
+                <label htmlFor='image-input' style={{padding:'15px 30px', fontSize:'16px', backgroundColor:'#2ef3b8', borderRadius:'10px', cursor:'pointer', fontFamily: `"Poppins", sans-serif`}}>Choose your image</label>
                 {
                     errorMessage && <p style={{margin: '10px', color: '#f0547b', fontSize:'14px'}}>{errorMessage}</p>
 

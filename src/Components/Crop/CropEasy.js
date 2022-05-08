@@ -40,22 +40,15 @@ const CropEasy = ({ photoURL, setOpenModal, setPhotoURL, setFile }) => {
         croppedAreaPixels
       );
       setPhotoURL(url);
-      setFile(file);
+      var newFile = new File([file], "image", { type: "image/jpeg"})
+      console.log(newFile)
+      setFile(newFile);
       const formData = new FormData();
-      formData.append("file", file)
-      formData.append("upload_preset", "m7iklks3")
-      axios.post(
-        `https://api.cloudinary.com/v1_1/dfyxkbcgc/image/upload`,
-        formData
-      ).then((response) => {
-        const fileName = response.data.public_id;
-
+      formData.append("photo", newFile)
+      formData.append("caption", caption)
+      formData.append("users_id", id)
         axios.post(`${API_URL}/posts/upload`, 
-        {
-          caption: caption,
-          image: fileName,
-          users_id: id
-        },
+        formData,
         {
           headers: {
           authorization: token,
@@ -82,8 +75,7 @@ const CropEasy = ({ photoURL, setOpenModal, setPhotoURL, setFile }) => {
             confirmButtonColor: '#f0547b'
           })
         })
-      })
-    } catch (error) {
+      } catch (error) {
       setLoading(false);
       dispatch(closeModal())
       Swal.fire({
@@ -112,15 +104,13 @@ const CropEasy = ({ photoURL, setOpenModal, setPhotoURL, setFile }) => {
       justifyContent: 'center',
       alignItems: 'center'}} onClick={() => dispatch(closeModal())}>
       <div style={{
-         width: '80%',
-         maxWidth: '900px',
-         minWidth: '400px',
-         height: '560px',
-         padding: '0px 4vw',
-         backgroundColor: 'white',
-         borderRadius: '20px',
-         display: 'flex',
-         position: 'relative'
+        width: '900px',
+        height: '560px',
+        padding: '0px 4vw',
+        backgroundColor: 'white',
+        borderRadius: '20px',
+        display: 'flex',
+        position: 'relative'
       }} onClick={e => {e.stopPropagation()}}>
       <img className='upperture-close-icon upperture-pointer' src={CloseIcon} alt="close"  onClick={() => dispatch(closeModal())}/>
         <div style={{
@@ -144,7 +134,7 @@ const CropEasy = ({ photoURL, setOpenModal, setPhotoURL, setFile }) => {
         <div>
           <div style={{width:'350px', display:'flex', flexDirection:'column', alignItems:'center'}}>
             <p style={{margin:'10px 0px 0px'}}>Zoom: {`${zoomPercent(zoom)}%`}</p>
-            <input type="range" class="form-range" min="1" max="3" step="0.1" style={{width:'100%'}} value={zoom} onChange={(event) => setZoom(event.target.value)} />
+            <input type="range" className="form-range" min="1" max="3" step="0.1" style={{width:'100%'}} value={zoom} onChange={(event) => setZoom(event.target.value)} />
           </div>
           <div
             style={{
@@ -155,6 +145,7 @@ const CropEasy = ({ photoURL, setOpenModal, setPhotoURL, setFile }) => {
           >
             <button
               className='upperture-submit-button'
+              name='photo'
               onClick={cropImage}
               disabled={loading}
             >
