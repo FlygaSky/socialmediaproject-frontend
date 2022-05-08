@@ -367,7 +367,7 @@ p {
 #register-modal {
   width: 80%;
   max-width: 600px;
-  min-width: 300px;
+  min-width: 400px;
   height: 560px;
   padding: 0px 4vw;
   background-color: var(--main-light);

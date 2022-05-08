@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LogoText from '../Supports/Assets/Icons/Upperture Logo.svg'
 import LogoNoText from '../Supports/Assets/Icons/camera-icon.png'
 import SearchIcon from '../Supports/Assets/Icons/User Interface/Research.svg'
@@ -8,10 +8,11 @@ import HeartOutlineIcon from '../Supports/Assets/Icons/User Interface/HeartOutli
 import LogoutIcon from '../Supports/Assets/Icons/User Interface/Logout.svg'
 import SettingIcon from '../Supports/Assets/Icons/User Interface/Setting.svg'
 import UploadIcon from '../Supports/Assets/Icons/User Interface/Upload.svg'
-import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { logoutAction } from '../redux/actions/userActions';
-
+import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { logoutAction } from '../redux/actions/userActions'
+import { openModal } from '../redux/actions/postActions'
+import UploadModal from './Crop/CropEasy'
 
 function Navpane(props) {
     const navLinkStyle = {
@@ -59,8 +60,8 @@ function Navpane(props) {
                 <p className='menu-text'>Log out</p>
             </div>
             </NavLink>
-            <button id='upload-button'>Upload</button>
-            <button id='upload-button-small'><img src={UploadIcon} alt="upload" className='menu-icon' /></button>
+            <button id='upload-button' onClick={() => dispatch(openModal())}>Upload</button>
+            <button id='upload-button-small' onClick={() => dispatch(openModal())}><img src={UploadIcon} alt="upload" className='menu-icon' /></button>
             <div className='upperture-footer mt-4'>
                 <span className='upperture-dark-grey upperture-font-size-10 mb-0 mx-2'>Terms of Service</span>
                 <span className='upperture-dark-grey upperture-font-size-10 mb-0 mx-2'>Privacy Policy</span>
@@ -72,7 +73,6 @@ function Navpane(props) {
                 <span className='upperture-dark-grey upperture-font-size-10 mb-0 mx-2'>Ads info</span>
             </div>
             <p className='upperture-footer upperture-dark-grey upperture-font-size-10 my-0'>© 2022 Upperture, Inc.</p>
-
         </div>
     );
 }

@@ -9,6 +9,7 @@ import Settings from "./Pages/Settings";
 import Unconfirmed from "./Pages/Unconfirmed"
 import Confirmation from "./Pages/Confirmation";
 import PageNotFound from "./Pages/PageNotFound";
+import UploadModal from "./Components/UploadModal"
 import { keepLoginAction } from "./redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -20,36 +21,44 @@ import './Supports/Stylesheets/Utils.css'
 
 
 function App() {
-  const dispatch = useDispatch();
-  const {username, isVerified} = useSelector(state => state.userReducer)
+  // const dispatch = useDispatch();
+  // const {username, isVerified} = useSelector(state => {
+  //   console.log('isi dari global state:', state.userReducer);
+  //   return state.userReducer})
 
-  const keepLogin = async () => {
-      try {
-          let myTkn = localStorage.getItem("myTkn")
-          if (myTkn) {
-              let result = await axios.get(API_URL + '/user/keeplogin', {headers: {
-                  'authorization': myTkn,
-                  // 'Accept' : 'application/json',
-                  // 'Content-Type': 'application/json'
-              }})
-              console.log(result)
-              dispatch({
-                      type: "LOGIN_SUCCESS",
-                      payload: result.data
-                  })
-              }
-      } catch(err) {
-        console.log(err)
-    }
-  }
+  // const keepLogin = async () => {
+  //     try {
+  //       console.log('keepLogin jalan')
+  //         let myTkn = localStorage.getItem("myTkn")
+  //         if (myTkn) {
+  //             let result = await axios.get(API_URL + '/user/keeplogin', {headers: {
+  //                 'authorization': myTkn,
+  //                 // 'Accept' : 'application/json',
+  //                 // 'Content-Type': 'application/json'
+  //             }})
+  //             console.log(result.data)
+  //             dispatch({type : "LOGIN_SUCCESS", payload: result.data})
+  //             console.log('dispatch jalan', dispatch)
+  //             console.log(`dari data = username: ${result.data.username}, isVerified:${result.data.isVerified}`)
+  //             console.log(`username: ${username}, isVerified:${isVerified}`)
+  //             }
+  //     } catch(err) {
+  //       console.log(err)
+  //   }
+  // }
   
-  React.useEffect(() => {
-    keepLogin()
-    console.log('after keeplogin -> ' + username + isVerified)
-  }, [])
+  // React.useEffect(() => {
+  //   keepLogin()
+  //   console.log('after keeplogin -> ' + username + isVerified)
+  // }, [])
+  
+  const { openModal } = useSelector(state => state.userReducer)
 
   return (
     <div>
+      {
+        openModal && <UploadModal />
+      }
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/confirmation/:token" element={<Confirmation />} />

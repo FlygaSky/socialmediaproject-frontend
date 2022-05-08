@@ -22,8 +22,10 @@ function LandingPage(props) {
     const [redirect, setRedirect] = React.useState(false)
 
     const dispatch = useDispatch()
-    const {loading, username, isVerified, error} = useSelector(state => state.userReducer)
-
+    const {loading, username, isVerified, error} = useSelector(state => {
+        console.log('isi dari global state LandingPage:', state.userReducer);
+        return state.userReducer})
+    
     const initialValues = {
         usernameOrEmail: '',
         password: '',
@@ -45,7 +47,7 @@ function LandingPage(props) {
     }, [username])
     
     if(redirect){
-        console.log(username, isVerified)
+        console.log(`sblm redirect landing page username: ${username}, isverified: ${isVerified}`)
         if(isVerified == 0) {
             return <Navigate to='/unconfirmed' />
         } else if(isVerified == 1) {
@@ -107,8 +109,7 @@ function LandingPage(props) {
                     </div>
                     <button className='upperture-submit-button'
                     type='submit'
-                    disabled={!formik.isValid || formik.isSubmitting || loading}
-                    onClick={() => onSubmit()}>
+                    disabled={!formik.isValid || formik.isSubmitting || loading}>
                     Log in</button>
                     <div className='d-flex justify-content-center align-items-center'>
                         <img src={GoogleLogo} alt="Google" id='google-logo' className='upperture-pointer'/>

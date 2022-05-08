@@ -4,22 +4,19 @@ import { useParams, Navigate, NavLink } from 'react-router-dom'
 // SweetAlert
 import Swal from 'sweetalert2';
 import { API_URL } from '../Supports/Functions/helper';
+import { useDispatch } from 'react-redux';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
     timer: 5000,
     timerProgressBar: true,
-    // didOpen: (toast) => {
-    //   toast.addEventListener('mouseenter', Swal.stopTimer)
-    //   toast.addEventListener('mouseleave', Swal.resumeTimer)
-    // }
 })
 
 const Confirmation = () => {
 
     const [isRedirect, setIsRedirect] = useState(false)
-
+    const dispatch = useDispatch()
     let params = useParams();
 
     const [message, setMessage] = useState('')
@@ -38,6 +35,10 @@ const Confirmation = () => {
             Toast.fire({
                 icon: 'success',
                 title: res.data.message
+            })
+            dispatch({
+                type: "LOGIN_SUCCESS",
+                payload: res.data
             })
             setTimeout(() => setIsRedirect(true), 5000)
             localStorage.setItem('myTkn', params.token)
@@ -66,7 +67,7 @@ const Confirmation = () => {
                             <div>
                                 <h1>{message}</h1>
                                 <br/>
-                                <NavLink to="/home" style={{textDecoration: "none"}}>
+                                <NavLink to={localStorage.getItem('myTkn') ? "/home" : "/"} style={{textDecoration: "none"}}>
                                     <h4 style={{color: "#2ef3b8"}}>Go back to home</h4>
                                 </NavLink>
                             </div>

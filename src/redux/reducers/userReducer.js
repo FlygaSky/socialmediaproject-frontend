@@ -1,6 +1,7 @@
 const INITIAL_STATE={
     loading:false,
     error:null,
+    openModal:false,
     id:null,
     username:"",
     email:"",
@@ -16,10 +17,15 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         case "CLEAR_ERROR":
             return {...state, error:null}
         case "LOGIN_SUCCESS":
-            return { ...state, ...action.payload };
+            return { ...state, ...action.payload }
         case "LOGOUT":
             return INITIAL_STATE;
+        case "OPEN_MODAL":
+            return {...state, openModal:true}
+        case "CLOSE_MODAL":
+            return {...state, openModal:false}
         default:
-            return state;
+            console.log('returned from default', state)
+            return state
         }
 }

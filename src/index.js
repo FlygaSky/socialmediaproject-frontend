@@ -7,14 +7,28 @@ import { applyMiddleware, createStore } from 'redux';
 import { rootReducers } from './redux/reducers';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
+import AuthProvider from './Components/AuthProvider'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
-const globalStore = createStore(rootReducers, {}, applyMiddleware(ReduxThunk));
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+const persistedReducer = persistReducer(persistConfig, rootReducers) 
+let store = createStore(persistedReducer, applyMiddleware(ReduxThunk))
+let persistor = persistStore(store)
 
 ReactDOM.render(
-  <Provider store={globalStore}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        {/* <AuthProvider> */}
+          <App />
+        {/* </AuthProvider> */}
+      </BrowserRouter>
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );
