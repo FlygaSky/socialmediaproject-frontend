@@ -9,10 +9,10 @@ import LogoutIcon from '../Supports/Assets/Icons/User Interface/Logout.svg'
 import SettingIcon from '../Supports/Assets/Icons/User Interface/Setting.svg'
 import UploadIcon from '../Supports/Assets/Icons/User Interface/Upload.svg'
 import { NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logoutAction } from '../redux/actions/userActions'
 import { openModal } from '../redux/actions/postActions'
-import UploadModal from './Crop/CropEasy'
+import { useNavigate } from 'react-router-dom'
 
 function Navpane(props) {
     const navLinkStyle = {
@@ -21,6 +21,8 @@ function Navpane(props) {
       };
     
     const dispatch = useDispatch()
+    const {username} = useSelector(state => state.userReducer) 
+    let navigate = useNavigate()
 
     return (
         <div id='navpane-container'>
@@ -36,7 +38,7 @@ function Navpane(props) {
                     <p className='menu-text'>Home</p>
                 </div>
             </NavLink>
-            <NavLink to="/profile" style={navLinkStyle} className={(navData) => navData.isActive ? "selected-menu" : "" }>
+            <NavLink to={`/profile/${username}`} style={navLinkStyle} className={(navData) => navData.isActive ? "selected-menu" : "" }>
                 <div className='menu-container'>
                     <img src={ProfileIcon} alt="home" className='menu-icon' />
                     <p className='menu-text'>Profile</p>

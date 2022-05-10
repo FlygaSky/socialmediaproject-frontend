@@ -64,10 +64,11 @@ function App() {
           <Route path="/confirmation/:token" element={<Confirmation />} />
           <Route path="/unconfirmed" element={<Unconfirmed />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:username" element={<Profile />} />
           <Route path="/detail" element={<PostDetail />} />
           <Route path="/liked-posts" element={<LikedPosts />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/page-not-found" element={<PageNotFound />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
     </div>

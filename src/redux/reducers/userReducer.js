@@ -5,6 +5,7 @@ const INITIAL_STATE={
     id:null,
     username:"",
     email:"",
+    profilePic:"",
     isVerified:0
 }
 
@@ -20,6 +21,8 @@ export const userReducer = (state = INITIAL_STATE, action) => {
             return { ...state, ...action.payload }
         case "LOGOUT":
             return INITIAL_STATE;
+        case "UPDATE_PIC":
+            return {...state, profilePic:action.payload}
         case "OPEN_MODAL":
             return {...state, openModal:true}
         case "CLOSE_MODAL":

@@ -26,7 +26,7 @@ export const loginAction = (usernameOrEmail, password) => {
 
 export const keepLoginAction = (val) => {
     return (dispatch) => {
-        console.log('masuk dispatch, ini payload', val)
+        // console.log('masuk dispatch, ini payload', val)
             dispatch({
                 type: "LOGIN_SUCCESS",
                 payload: val
@@ -35,8 +35,17 @@ export const keepLoginAction = (val) => {
     }
 
 export const logoutAction = () => {
-    localStorage.removeItem("myTkn");
+    localStorage.removeItem("myTkn")
     return {
         type: "LOGOUT"
+    }
+}
+
+export const changeProfilePic = (val) => {
+    return (dispatch) => {
+        if(val !== null){dispatch({
+            type: "UPDATE_PIC",
+            payload: val
+        })}
     }
 }
