@@ -512,8 +512,8 @@ p {
 }
 
 .home-post-container {
-  width: 33.33%;
-  padding: 2.5% 2.5%;
+  width: calc((100vw - 300px - 6vw) / 3);
+  padding: 2vw 2vw;
 }
 
 .home-post-picture {
@@ -541,6 +541,8 @@ p {
   margin: 0% 5%;
   font-size: 1.2vw;
   width: 100%;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .home-post-date {
@@ -561,11 +563,13 @@ p {
   height: 2.3vw;
   filter: invert(22%) sepia(14%) saturate(129%) hue-rotate(114deg)
     brightness(96%) contrast(91%);
+  cursor: pointer;
 }
 
 .home-post-heart-liked {
   width: 2.5vw;
   height: 2.3vw;
+  cursor: pointer;
 }
 
 .home-post-number-of-likes {
@@ -674,7 +678,7 @@ p {
 }
 
 #detail-container {
-  max-width: calc(1850vh / 13);
+  max-width: calc(1850vh / 13 + 2px);
   display: flex;
   flex-wrap: wrap;
   height: 100%;
@@ -975,7 +979,7 @@ p {
 
 @media (max-width: 1200px) {
   .home-post-container {
-    width: 50%;
+    width: calc((100vw - 300px - 6vw)/2);
   }
 
   .home-post-profile-pic {
@@ -1021,8 +1025,8 @@ p {
   }
 
   .home-post-container {
-    width: 100%;
-    padding: 5%;
+    width: calc(100vw - 80px - 10vw) !important;
+    margin-bottom: 50px;
   }
 
   .home-post-profile-pic {
@@ -1126,5 +1130,9 @@ p {
   .page-container {
     width: calc(100vw - 80px);
     margin-left: 80px;
+  }
+
+  .home-post-container {
+    width: calc((100vw - 80px - 8vw)/2);
   }
 }

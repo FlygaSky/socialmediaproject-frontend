@@ -24,7 +24,6 @@ function Profile(props) {
     useEffect(() => {
         axios.post(API_URL + '/user/getusername', {username: profileUsername})
         .then((res) => {
-            console.log(res)
             setNotFound(true)
         }).catch(() => {
             console.log('username exists')

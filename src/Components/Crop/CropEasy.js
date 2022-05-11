@@ -7,6 +7,8 @@ import CloseIcon from '../../Supports/Assets/Icons/User Interface/Close.svg'
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { API_URL } from '../../Supports/Functions/helper';
+import ShortUniqueId from 'short-unique-id'
+import { useNavigate } from 'react-router-dom';
 
 const CropEasy = ({ photoURL, setOpenModal, setPhotoURL, setFile }) => {
   const [loading, setLoading] = useState(false);
@@ -16,6 +18,7 @@ const CropEasy = ({ photoURL, setOpenModal, setPhotoURL, setFile }) => {
   const [caption, setCaption] = useState('')
   const [error, setError] = useState(null)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const {id} = useSelector(state => state.userReducer)
   const token = localStorage.getItem('myTkn')
   const cropComplete = (croppedArea, croppedAreaPixels) => {
@@ -41,12 +44,15 @@ const CropEasy = ({ photoURL, setOpenModal, setPhotoURL, setFile }) => {
       );
       setPhotoURL(url);
       var newFile = new File([file], "image", { type: "image/jpeg"})
-      console.log(newFile)
+      const uid = new ShortUniqueId()
+      const uidWithTimestamp = uid.stamp(12)
       setFile(newFile);
+      
       const formData = new FormData();
       formData.append("photo", newFile)
       formData.append("caption", caption)
       formData.append("users_id", id)
+      formData.append("unique_id", uidWithTimestamp)
         axios.post(`${API_URL}/posts/upload`, 
         formData,
         {
@@ -57,6 +63,7 @@ const CropEasy = ({ photoURL, setOpenModal, setPhotoURL, setFile }) => {
         ).then(() => {
           setLoading(false);
           dispatch(closeModal())
+          window.location.pathname == '/home' && window.location.reload()
           Swal.fire({
             title: 'Success!',
             text: 'You can view your post at home or your profile.',
