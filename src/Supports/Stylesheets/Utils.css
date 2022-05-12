@@ -716,6 +716,7 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 
 .detail-header-container {
@@ -741,6 +742,7 @@ p {
   margin: 0px 10px;
   font-size: 18px;
   width: 100%;
+  font-weight: 600;
 }
 
 .post-date {
@@ -779,7 +781,7 @@ p {
 
 #comments-container {
   overflow-y: scroll;
-  height: calc(100% - 50px - 50px -2rem);
+  min-height: calc(400px - 2rem);
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;  /* Firefox */
   border-bottom: 10px solid white;
@@ -853,6 +855,7 @@ p {
   brightness(96%) contrast(91%);
   align-self: center;
   width: 25px;
+  cursor: pointer;
 }
 
 /* ###EDITPROFILEMODAL */

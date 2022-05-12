@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
 import { useParams, Navigate, NavLink } from 'react-router-dom'
-// SweetAlert
-import Swal from 'sweetalert2';
 import { API_URL } from '../Supports/Functions/helper';
 import { useDispatch } from 'react-redux';
+
+// SweetAlert
+import Swal from 'sweetalert2';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',

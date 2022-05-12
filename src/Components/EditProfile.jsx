@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import {API_URL} from '../Supports/Functions/helper'
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function EditProfile(props) {
     const [username, setUsername] = React.useState(useSelector(state => state.userReducer.username));
@@ -114,6 +115,13 @@ function EditProfile(props) {
                 type: 'LOGIN_SUCCESS',
                 payload: res.data
             })
+            Swal.fire({
+                title: 'Success!',
+                text: 'Your profile detail is updated.',
+                icon: 'success',
+                confirmButtonText: 'Okay!',
+                confirmButtonColor: '#369a7c'
+              })
             navigate(`/profile/${username}`, { replace: true })
         }).catch((err) => {
             console.log(err)

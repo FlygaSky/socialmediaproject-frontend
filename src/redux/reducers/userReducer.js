@@ -28,7 +28,6 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         case "CLOSE_MODAL":
             return {...state, openModal:false}
         default:
-            console.log('returned from default', state)
             return state
         }
 }
