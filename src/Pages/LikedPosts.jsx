@@ -1,10 +1,36 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Navpane from '../Components/Navpane';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import useLikedPostsSearch from './useLikedPostsSearch'
+import Post from '../Components/Post'
+import Loading from '../Components/Loading'
+import NoLikedPost from '../Components/NoLikedPost'
 
 function LikedPosts(props) {
+    const [pageNumber, setPageNumber] = useState(1)
     const {isVerified} = useSelector(state => state.userReducer)
+
+    const {
+        posts,
+        hasMore,
+        loading,
+        error,
+        errorMsg
+      } = useLikedPostsSearch(pageNumber)
+
+    const observer = useRef()
+    const lastPostRef = useCallback(node => {
+        if (loading) return
+        if (observer.current) observer.current.disconnect()
+        observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && hasMore) {
+            setPageNumber(prevPageNumber => prevPageNumber + 1)
+        }
+        })
+        if (node) observer.current.observe(node)
+    }, [loading, hasMore])
+
     if(!localStorage.getItem('myTkn')){
         return(
             <Navigate to='/' />
@@ -14,26 +40,30 @@ function LikedPosts(props) {
             <Navigate to='/unconfirmed' />
         )
     }
+
     return (
         <div className='d-flex'>
             <Navpane />
             <div className='page-container'>
-                <div className='home-post-container'>
-                    <img className='home-post-picture' src={require(`../Supports/Assets/Posts/Anni-Roenkae/pexels-anni-roenkae-2693212.jpg`)} alt="sunset" />
-                    <div className='home-post-detail-container'>
-                        <div className='d-flex home-post-detail-left'>
-                            <img className='home-post-profile-pic' src={require(`../Supports/Assets/Profile Pics/rafael-cerqueira.jpeg`)} alt="profile-pic" />
-                            <div className='d-flex flex-column'>
-                                <p className='home-post-name'>incrediblerafa</p>
-                                <p className='home-post-date'>28 March 2022</p>
-                            </div>
+            
+            {
+                posts.map((post, index) => {
+                    if (posts.length === index + 1) {
+                        return <div ref={lastPostRef} key={post.id}>
+                           <Post post={post} pageNumber={pageNumber} />
                         </div>
-                        <div className='d-flex home-post-detail-right'>
-                            <img className='home-post-heart-liked' src={require(`../Supports/Assets/Icons/User Interface/HeartRed.png`)} alt="profile-pic" />
-                            <p className='home-post-number-of-likes'>3</p>
+                    } else {
+                        return <div key={post.id}>
+                            <Post post={post} pageNumber={pageNumber} />
                         </div>
-                    </div>
-                </div>
+                    }
+                })
+            }
+                <div>{loading && < Loading />}</div>
+                <div>{error && `${errorMsg}`}</div>
+            {
+                posts.length == 0 && < NoLikedPost />
+            }
             </div>
         </div>
     );

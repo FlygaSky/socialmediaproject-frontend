@@ -6,9 +6,10 @@ import PaperPlane from '../Supports/Assets/Icons/User Interface/Paper Plane.svg'
 import axios from 'axios';
 import {API_URL} from '../Supports/Functions/helper'
 import DefaultPicture from '../Supports/Assets/Icons/Users/DefaultPicture.jpg'
-import MenuIcon from '../Supports/Assets/Icons/User Interface/Menu.svg'
+import MenuIcon from '../Supports/Assets/Icons/User Interface/VerticalMenu.svg'
 import Comment from '../Components/Comment'
 import PostOptions from '../Components/PostOptions'
+import Loading from '../Components/Loading'
 import Swal from 'sweetalert2';
 const Toast = Swal.mixin({
     toast: true,
@@ -20,6 +21,7 @@ const Toast = Swal.mixin({
 
 function PostDetail(props) {
     const [notFound, setNotFound] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [pageNumber, setPageNumber] = useState(1)
     const [postOptionsOpen, setPostOptionsOpen] = useState(false)
     const [post, setPost] = useState({image: '',
@@ -57,9 +59,12 @@ function PostDetail(props) {
             setCaption(res.data.caption)
             setNewCaption(res.data.caption)
             console.log(res.data)
+            setLoading(false)
             res.length == 0 && setNotFound(true)
         }).catch((err) => {
             console.log(err)
+            setLoading(false)
+            setNotFound(true)
         })     
         }, [])
 
@@ -129,6 +134,7 @@ function PostDetail(props) {
         })
         .then((res) => {
             console.log('res.data postComment', res.data)
+            comments.length == totalComments && setComments([...comments, res.data.data])
             Toast.fire({
                 icon: 'success',
                 title: 'Comment successfully posted!'
@@ -177,13 +183,16 @@ function PostDetail(props) {
         )
     }
     return (
-        <div className='d-flex'>
+        <div className='d-flex upperture-bg-medium-grey' style={{minHeight:'100vh', display:'block', overflow:'auto'}}>
             <Navpane />
-            <div className='page-container detail-page-container upperture-bg-medium-grey justify-content-around' style={{padding: '5vw'}}>
+            <div className='page-container detail-page-container justify-content-center' style={{padding: '5vw'}}>
                 {
                     postOptionsOpen && <PostOptions post={post} setPostOptionsOpen={setPostOptionsOpen} />
                 }
-                <div id='detail-container'>
+                {
+                    loading
+                    ? <div style={{marginTop:'-50px'}}>< Loading /></div>
+                    : <div id='detail-container'>
                     <div id='detail-container-left'>
                         <div id='detail-image-container'>
                             <img id='detail-image' src={post.image} alt="post" />
@@ -226,7 +235,7 @@ function PostDetail(props) {
                                             onClick={() => addLike(id, post.id)} />
                                     }
                                     <p className='post-number-of-likes'>{likeNumber}</p>
-                                    <img style={{width:'30px',
+                                    <img style={{height:'24px',
                                                  filter: 'invert(22%) sepia(14%) saturate(129%) hue-rotate(114deg) brightness(96%) contrast(91%)',
                                                  marginLeft: '10px',
                                                  cursor: 'pointer'
@@ -310,14 +319,17 @@ function PostDetail(props) {
                         <div className='comment-submit-area'>
                             <img className='comment-submit-button' src={PaperPlane} alt="submit"
                                 onClick={async() => {
-                                    myComment && await postComment(myComment, post.users_id, post.id)
-                                    setTotalComments(totalComments + 1)
-                                    setMyComment('')
+                                    if(myComment){
+                                        await postComment(myComment, id, post.id)
+                                        setTotalComments(totalComments + 1)
+                                        setMyComment('')
+                                    }
                                 }} />
                         </div>
                         </div>
                     </div>
                 </div>
+                }         
             </div>
         </div>
     );

@@ -3,12 +3,14 @@ import Axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import { API_URL } from '../Supports/Functions/helper';
 import Swal from 'sweetalert2';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../redux/actions/userActions';
+import { Navigate } from 'react-router-dom';
 
 const Confirmation = () => {
     const [loading, setLoading] = React.useState(false);
     const dispatch = useDispatch()
+    const {isVerified} = useSelector(state => state.userReducer)
 
     const resendEmail = () => {    
         setLoading(true)
@@ -32,6 +34,17 @@ const Confirmation = () => {
                 console.log(err)
             })
     }
+    
+    if(!localStorage.getItem('myTkn')){
+        return(
+            <Navigate to='/' />
+        )
+    }else if(isVerified == 1) {
+        return(
+            <Navigate to='/home' />
+        )
+    }
+
     return(
         <div style={{width: "100vw", height: "100vh", backgroundColor: "#effffa"}}>
             <div className="row justify-content-center align-items-center" style={{height: '100vh'}}>

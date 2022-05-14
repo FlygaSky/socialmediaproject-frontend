@@ -23,9 +23,9 @@ function Settings(props) {
     }
 
     return (
-        <div className='d-flex'>
+        <div className='d-flex upperture-bg-medium-grey' style={{display:'block', overflow:'auto', minHeight:'100vh'}}>
             <Navpane />
-            <div className='page-container detail-page-container upperture-bg-medium-grey justify-content-around' style={{padding: '3vw'}}>
+            <div className='page-container detail-page-container justify-content-around' style={{padding: '3vw'}}>
                 <div id='settings-header-container'>
                     <h1>Settings</h1>
                 </div>

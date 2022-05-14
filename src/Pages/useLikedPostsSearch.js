@@ -3,7 +3,7 @@ import {API_URL} from '../Supports/Functions/helper'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-export default function usePostSearch(pageNumber) {
+export default function useLikedPostsSearch(pageNumber) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [errorMsg, setErrorMsg] = useState('')
@@ -15,7 +15,7 @@ export default function usePostSearch(pageNumber) {
     useEffect(() => {
         setLoading(true)
         setError(false)
-        axios.post(`${API_URL}/posts/getallposts?page=${pageNumber}&limit=6`, {ownId: id}, {
+        axios.post(`${API_URL}/posts/getlikedposts?page=${pageNumber}&limit=6`, {ownId: id}, {
             headers: {
             authorization: token
             }

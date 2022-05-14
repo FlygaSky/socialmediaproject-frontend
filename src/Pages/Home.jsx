@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import usePostSearch from './usePostSearch'
 import Post from '../Components/Post'
+import Loading from '../Components/Loading'
 
 function Home(props) {
     const [pageNumber, setPageNumber] = useState(1)
@@ -58,7 +59,7 @@ function Home(props) {
                     }
                 })
             }
-                <div>{loading && 'Loading...'}</div>
+                <div>{loading && < Loading />}</div>
                 <div>{error && `${errorMsg}`}</div>
             </div>
         </div>
