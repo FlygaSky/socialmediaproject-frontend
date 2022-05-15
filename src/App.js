@@ -18,6 +18,7 @@ import { API_URL } from "../src/Supports/Functions/helper";
 // CSS
 import 'bootstrap/dist/css/bootstrap.css';
 import './Supports/Stylesheets/Utils.css'
+import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
           <Route path="/post/:uniqueid" element={<PostDetail />} />
           <Route path="/liked-posts" element={<LikedPosts />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/resetpassword/:token" element={<ForgotPasswordPage />} />
           <Route path="/page-not-found" element={<PageNotFound />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>

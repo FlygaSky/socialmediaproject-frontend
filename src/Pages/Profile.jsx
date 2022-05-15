@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link, Navigate, useLocation } from 'react-router-dom';
 import EditProfile from '../Components/EditProfile';
 import Navpane from '../Components/Navpane';
 import { changeProfilePic } from '../redux/actions/userActions';
@@ -18,7 +18,7 @@ function Profile(props) {
     const [bio, setBio] = useState('')
     const [notMyProfilePic, setNotMyProfilePic] = useState('')
     const [pageNumber, setPageNumber] = useState(1)
-
+    
     const {profilePic} = useSelector(state => state.userReducer)
     const {username} = useSelector(state => state.userReducer)
     const {isVerified} = useSelector(state => state.userReducer)
@@ -26,14 +26,13 @@ function Profile(props) {
     let params = useParams();
     const profileUsername = params.username
     const dispatch = useDispatch()
+    const location = useLocation()
 
     const {
         posts,
         hasMore,
         loading,
         setLoading,
-        error,
-        errorMsg
       } = useOwnPostsSearch(pageNumber, profileUsername)
 
     const observer = useRef()
@@ -48,8 +47,46 @@ function Profile(props) {
         if (node) observer.current.observe(node)
     }, [loading, hasMore])
 
+    const printPosts = () => {
+        return posts.map((post, index) => {
+            if (posts.length === index + 1) {
+                return <div className='home-post-container' ref={lastPostRef} key={post.id}>
+                    <div style={{position: "relative", width: "100%"}}>
+                        <Link to={`/post/${post.unique_id}`} style={linkStyle}>
+                            <img className='home-post-picture' src={post.image} alt="" />
+                            <div className='post-overlay'>
+                                <div className='d-flex justify-content-center align-items-center'>
+                                    <img className='heart-white' src={require(`../Supports/Assets/Icons/User Interface/HeartWhite.png`)} alt="heart" />
+                                    <p className='number-of-likes-comments-white'>{post.likes}</p>
+                                    <img className='comment-white' src={CommentsWhite} alt="comments" />
+                                    <p className='number-of-likes-comments-white'>{post.comments}</p>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+            } else {
+                return <div className='home-post-container' key={post.id}>
+                    <div style={{position: "relative", width: "100%"}}>
+                        <Link to={`/post/${post.unique_id}`} style={linkStyle}>
+                            <img className='home-post-picture' src={post.image} alt="" />
+                            <div className='post-overlay'>
+                                <div className='d-flex justify-content-center align-items-center'>
+                                    <img className='heart-white' src={require(`../Supports/Assets/Icons/User Interface/HeartWhite.png`)} alt="heart" />
+                                    <p className='number-of-likes-comments-white'>{post.likes}</p>
+                                    <img className='comment-white' src={CommentsWhite} alt="comments" />
+                                    <p className='number-of-likes-comments-white'>{post.comments}</p>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+            }
+        })
+    }
 
     useEffect(() => {
+        console.log(profileUsername)
         setLoading(true)
         axios.post(API_URL + '/user/getusername', {username: profileUsername})
         .then((res) => {
@@ -80,6 +117,10 @@ function Profile(props) {
         })
         }, [profileUsername])
     
+    // useEffect(() => {
+    //     if(location.pathname == `/profile/${username}`) window.location.reload();
+    // }, [profileUsername])
+
     if(notFound) {
         return <Navigate to='/page-not-found' />
     }
@@ -149,46 +190,13 @@ function Profile(props) {
                             }
                         </div>
                     </div>
-                    <div style={{minHeight:'450px', width:'100%', display: 'flex', flexWrap: 'wrap'}}>
+                    <div style={{minHeight:'450px', width:'100%', display: 'flex', flexWrap: 'wrap'}}>  
+
                     {
-                        posts.map((post, index) => {
-                            if (posts.length === index + 1) {
-                                return <div className='home-post-container' ref={lastPostRef} key={post.id}>
-                                    <div style={{position: "relative", width: "100%"}}>
-                                        <Link to={`/post/${post.unique_id}`} style={linkStyle}>
-                                            <img className='home-post-picture' src={post.image} alt="" />
-                                            <div className='post-overlay'>
-                                                <div className='d-flex justify-content-center align-items-center'>
-                                                    <img className='heart-white' src={require(`../Supports/Assets/Icons/User Interface/HeartWhite.png`)} alt="heart" />
-                                                    <p className='number-of-likes-comments-white'>{post.likes}</p>
-                                                    <img className='comment-white' src={CommentsWhite} alt="comments" />
-                                                    <p className='number-of-likes-comments-white'>{post.comments}</p>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </div>
-                            } else {
-                                return <div className='home-post-container' key={post.id}>
-                                    <div style={{position: "relative", width: "100%"}}>
-                                        <Link to={`/post/${post.unique_id}`} style={linkStyle}>
-                                            <img className='home-post-picture' src={post.image} alt="" />
-                                            <div className='post-overlay'>
-                                                <div className='d-flex justify-content-center align-items-center'>
-                                                    <img className='heart-white' src={require(`../Supports/Assets/Icons/User Interface/HeartWhite.png`)} alt="heart" />
-                                                    <p className='number-of-likes-comments-white'>{post.likes}</p>
-                                                    <img className='comment-white' src={CommentsWhite} alt="comments" />
-                                                    <p className='number-of-likes-comments-white'>{post.comments}</p>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </div>
-                            }
-                        })
-                    }
-                    {
-                        posts.length == 0 && < NoPostYet />
+                        
+                        posts.length == 0
+                        ? < NoPostYet />
+                        : printPosts()
                     }
                     </div>
                     </>

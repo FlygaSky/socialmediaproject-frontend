@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import {API_URL} from '../Supports/Functions/helper'
-
+import { FacebookShareButton, WhatsappShareButton, TwitterShareButton } from 'react-share'
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -96,12 +96,18 @@ function PostOptions({post, setPostOptionsOpen}) {
                     ? <>
                         <p style={{marginTop:'-20px', fontSize:'22px', fontWeight:'500', textAlign:'center'}}>Share to:</p>
                         <div className='d-flex justify-content-center'>
-                            <img style={{cursor:'pointer', width:'50px', filter:'invert(22%) sepia(14%) saturate(129%) hue-rotate(114deg) brightness(96%) contrast(91%)'}}
-                            src={WhatsappLogo} alt="" />
-                            <img style={{cursor:'pointer', margin: '0px 30px', width:'50px', filter:'invert(22%) sepia(14%) saturate(129%) hue-rotate(114deg) brightness(96%) contrast(91%)'}}
-                            src={TwitterLogo} alt="" />
-                            <img style={{cursor:'pointer', width:'50px', filter:'invert(22%) sepia(14%) saturate(129%) hue-rotate(114deg) brightness(96%) contrast(91%)'}}
-                            src={FacebookLogo} alt="" />
+                            <WhatsappShareButton url={window.location.href} title={'Check out this awesome post from Upperture!'}>
+                                <img style={{cursor:'pointer', width:'50px', filter:'invert(22%) sepia(14%) saturate(129%) hue-rotate(114deg) brightness(96%) contrast(91%)'}}
+                                src={WhatsappLogo} alt="" />
+                            </WhatsappShareButton>
+                            <TwitterShareButton url={window.location.href} title={'Check out this awesome post from Upperture!'}>
+                                <img style={{cursor:'pointer', margin: '0px 30px', width:'50px', filter:'invert(22%) sepia(14%) saturate(129%) hue-rotate(114deg) brightness(96%) contrast(91%)'}}
+                                src={TwitterLogo} alt="" />
+                            </TwitterShareButton>
+                            <FacebookShareButton url={'www.example.com'} quote={'Check out this awesome post from Upperture!'}>
+                                <img style={{cursor:'pointer', width:'50px', filter:'invert(22%) sepia(14%) saturate(129%) hue-rotate(114deg) brightness(96%) contrast(91%)'}}
+                                src={FacebookLogo} alt="" />
+                            </FacebookShareButton>
                         </div>
                     </>
                     : <>

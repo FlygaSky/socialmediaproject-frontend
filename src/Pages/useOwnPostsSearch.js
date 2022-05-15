@@ -15,11 +15,14 @@ export default function useOwnPostsSearch(pageNumber, profileUsername) {
     useEffect(() => {
         pageNumber == 1 && setLoading(true)
         setError(false)
+        console.log('masuk ke useOwnPostSearch')
+        console.log('di useOwnPostSearch ', profileUsername)
         axios.post(`${API_URL}/posts/getownposts?page=${pageNumber}&limit=6`, {username: profileUsername}, {
             headers: {
             authorization: token
-            }
+        }
         }).then(res => {
+        
         setPosts(prevPosts => {
             return [...prevPosts, ...res.data.map(post => ({
                 id: post.id,
@@ -40,7 +43,7 @@ export default function useOwnPostsSearch(pageNumber, profileUsername) {
             setError(true)
             setErrorMsg(e.message)
         })
-    }, [pageNumber])
-
+    }, [pageNumber, profileUsername])
+    
     return { loading, setLoading, error, posts, hasMore, errorMsg }
 }
