@@ -33,7 +33,8 @@ function Profile(props) {
         hasMore,
         loading,
         setLoading,
-      } = useOwnPostsSearch(pageNumber, profileUsername)
+        setPosts
+      } = useOwnPostsSearch(pageNumber, profileUsername, location)
 
     const observer = useRef()
     const lastPostRef = useCallback(node => {
@@ -104,23 +105,31 @@ function Profile(props) {
             }
           })
         .then((res) => {
-            if(res.data.fullname) {setFullname(res.data.fullname)}
-            if(res.data.bio) {setBio(res.data.bio)}
+            if(res.data.fullname) {setFullname(res.data.fullname)
+            }else {setFullname('')}
+            if(res.data.bio) {setBio(res.data.bio)
+            }else {setBio('')}
             if(res.data.profilePic){
-                if(username == profileUsername) {dispatch(changeProfilePic(res.data.profilePic))
+                if(username == profileUsername) {
+                    dispatch(changeProfilePic(res.data.profilePic))
+                    setNotMyProfilePic('')
                 } else setNotMyProfilePic(res.data.profilePic)
+            } else {
+                setNotMyProfilePic('')
+                dispatch(changeProfilePic(''))
             }
             setLoading(false)
         }).catch((err) => {
             console.log(err)
             setLoading(false)
         })
-        }, [profileUsername])
-    
-    // useEffect(() => {
-    //     if(location.pathname == `/profile/${username}`) window.location.reload();
-    // }, [profileUsername])
+        }, [profileUsername, fullname, bio])
 
+    useEffect(() => {
+        setPosts([])
+        setPageNumber(1)
+    }, [location])
+    
     if(notFound) {
         return <Navigate to='/page-not-found' />
     }
@@ -186,14 +195,13 @@ function Profile(props) {
                             }
                             {
                                 username == profileUsername && <button className='edit-profile-button'
-                            onClick={() => setOpenEditProfile(true)}>Edit profile</button>
+                                onClick={() => setOpenEditProfile(true)}>Edit profile</button>
                             }
                         </div>
                     </div>
                     <div style={{minHeight:'450px', width:'100%', display: 'flex', flexWrap: 'wrap'}}>  
 
-                    {
-                        
+                    {          
                         posts.length == 0
                         ? < NoPostYet />
                         : printPosts()

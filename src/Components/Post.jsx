@@ -57,7 +57,9 @@ function Post({post, pageNumber}) {
 
     return (
         <div className='home-post-container'>
-            <img className='home-post-picture upperture-pointer' src={`${post.image}`} onClick={() => navigate(`/post/${post.unique_id}`, { replace: true })} alt="" />
+            <div style={{width:'100%', aspectRatio:'1/1', backgroundColor:'#dddddd' }}>
+                <img className='home-post-picture upperture-pointer' src={`${post.image}`} onClick={() => navigate(`/post/${post.unique_id}`, { replace: true })} alt="" />
+            </div>
             <div className='home-post-detail-container'>
                 <div className='d-flex home-post-detail-left'>
                     <img className='home-post-profile-pic upperture-pointer' onClick={() => navigate(`/profile/${post.username}`, { replace: true })} src={

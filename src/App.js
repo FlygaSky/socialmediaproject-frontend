@@ -19,6 +19,7 @@ import { API_URL } from "../src/Supports/Functions/helper";
 import 'bootstrap/dist/css/bootstrap.css';
 import './Supports/Stylesheets/Utils.css'
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
+import SearchBubble from "./Components/SearchBubble";
 
 
 function App() {
@@ -54,11 +55,15 @@ function App() {
   // }, [])
   
   const { openModal } = useSelector(state => state.userReducer)
+  const { openSearchBubble } = useSelector(state => state.userReducer)
 
   return (
     <div>
       {
         openModal && <UploadModal />
+      }
+      {
+        openSearchBubble && <SearchBubble />
       }
         <Routes>
           <Route path="/" element={<LandingPage />} />

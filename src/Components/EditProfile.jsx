@@ -73,7 +73,8 @@ function EditProfile(props) {
             setUsernameErrorMsg('Username must be between 3-20 characters containing only letters, numbers, and underscores')
         } else {
             setUsernameErrorMsg('')
-            axios.post(API_URL + '/user/getusername', {username: newUsername})
+            if(!(newUsername == profileUsername)){
+                axios.post(API_URL + '/user/getusername', {username: newUsername})
                 .then(() => {
                     setUsernameErrorMsg('')
                 }).catch(e => {
@@ -81,6 +82,7 @@ function EditProfile(props) {
                 })
             }
         }
+    }
 
     let fullNameChange = (event) => {
         setFullname(event.target.value)
@@ -108,7 +110,9 @@ function EditProfile(props) {
         .then((res) => {
             setUsername(res.data.username)
             if(res.data.fullname) {setFullname(res.data.fullname)}
+            else {setFullname('')}
             if(res.data.bio) {setBio(res.data.bio)}
+            else {setBio('')}
             setLoading(false)
             props.setModalOpen(false)
             dispatch({

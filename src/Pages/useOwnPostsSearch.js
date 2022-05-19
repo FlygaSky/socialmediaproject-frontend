@@ -3,14 +3,14 @@ import {API_URL} from '../Supports/Functions/helper'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-export default function useOwnPostsSearch(pageNumber, profileUsername) {
+export default function useOwnPostsSearch(pageNumber, profileUsername, location) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [errorMsg, setErrorMsg] = useState('')
     const [posts, setPosts] = useState([])
     const [hasMore, setHasMore] = useState(false)
     const token = localStorage.getItem('myTkn')
-    const {id} = useSelector(state => state.userReducer)
+    const {username} = useSelector(state => state.userReducer)
 
     useEffect(() => {
         pageNumber == 1 && setLoading(true)
@@ -43,7 +43,7 @@ export default function useOwnPostsSearch(pageNumber, profileUsername) {
             setError(true)
             setErrorMsg(e.message)
         })
-    }, [pageNumber, profileUsername])
+    }, [pageNumber, profileUsername, location])
     
-    return { loading, setLoading, error, posts, hasMore, errorMsg }
+    return { loading, setLoading, setPosts, error, posts, hasMore, errorMsg }
 }

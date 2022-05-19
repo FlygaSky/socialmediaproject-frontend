@@ -12,3 +12,28 @@ export const closeModal = () => {
         type: "CLOSE_MODAL"
     }
 }
+
+export const openSearchBubble = (entry) => {
+    return (dispatch) => {
+        const token = localStorage.getItem('myTkn')
+        axios.post(API_URL + '/user/searchuser', {entry}, {
+            headers: {
+            authorization: token
+            }
+        })
+        .then((res) => {
+            dispatch({
+                type: "OPEN_SEARCH_BUBBLE",
+                payload: res.data.users
+            })
+        }).catch((err) => {
+            console.log('Error di search:', err)
+        })
+    }
+}
+
+export const closeSearchBubble = () => {
+    return {
+        type: "CLOSE_SEARCH_BUBBLE",
+    }
+}

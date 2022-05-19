@@ -11,7 +11,7 @@ import UploadIcon from '../Supports/Assets/Icons/User Interface/Upload.svg'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutAction } from '../redux/actions/userActions'
-import { openModal } from '../redux/actions/postActions'
+import { closeSearchBubble, openModal, openSearchBubble } from '../redux/actions/postActions'
 import { useNavigate } from 'react-router-dom'
 
 function Navpane(props) {
@@ -30,7 +30,11 @@ function Navpane(props) {
             <img src={LogoNoText} alt="logo"id='upperture-logo-navpane-no-text' />
             <div id='search-bar-container'>
                 <img src={SearchIcon} alt="search" id='search-icon' />
-                <input type="text" placeholder='Search in Upperture' id="search-input" />
+                <input type="text" placeholder='Search username' id="search-input"
+                    onChange={(e) => {
+                        e.target.value ? dispatch(openSearchBubble(e.target.value))
+                        : dispatch(closeSearchBubble())
+                    }} />
             </div>
             <NavLink to="/home" style={navLinkStyle} className={(navData) => navData.isActive ? "selected-menu" : "" }>
                 <div className='menu-container'>

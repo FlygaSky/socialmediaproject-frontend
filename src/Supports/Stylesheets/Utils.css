@@ -16,6 +16,7 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
+  padding-right: 0 !important;
 }
 
 /* Background Color */
@@ -507,6 +508,66 @@ p {
   display: flex;
 }
 
+/* ###SEARCH BOX */
+.bubble {
+	height: 300px;
+	width: 300px;
+	background: white;
+	margin: 0 auto;
+	font-size: 200px;
+	text-align: center;
+  position: fixed;
+  left:300px;
+  top:100px;
+  z-index: 2;
+}
+
+.bubble-blurred {
+	height: 300px;
+	width: 300px;
+	margin: 0 auto;
+	font-size: 200px;
+	text-align: center;
+  left:300px;
+  top:100px;
+  background: rgb(188, 188, 188);
+	filter: blur(2px);
+	position: fixed;
+	z-index: 1;
+}
+
+.left-triangle {
+	height: 25px;
+	width: 25px;
+	background: white;
+	margin: 0 auto;
+	transform: rotate(45deg);
+  position: fixed;
+  top: 131px;
+  left: 290px; 
+  z-index: 2;
+}
+
+.left-triangle-blurred {
+  height: 25px;
+	width: 25px;
+	background: rgb(188, 188, 188);
+	filter: blur(2px);
+	margin: 0 auto;
+	transform: rotate(45deg);
+  position: fixed;
+  top: 131px;
+  left: 290px; 
+  z-index: 1;
+}
+
+#search-result-container {
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
 /* ###LOADING */
 #loading-container {
   width: calc(96vw - 300px);
@@ -552,6 +613,7 @@ p {
 
 .home-post-picture {
   width: 100%;
+  background-color: #dddddd;
 }
 
 .home-post-detail-container {
@@ -1010,11 +1072,11 @@ p {
   width: 80%;
   max-width: 700px;
   min-width: 300px;
-  height: 500px;
+  min-height: 530px;
+  height: auto;
   padding: 2vw 4vw;
   background-color: var(--main-light);
   position: relative;
-  overflow-y: scroll;
 }
 
 @media (max-width: 1200px) {

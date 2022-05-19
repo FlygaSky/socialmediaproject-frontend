@@ -22,6 +22,7 @@ const Toast = Swal.mixin({
 function PostDetail(props) {
     const [notFound, setNotFound] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [commentLoading, setCommentLoading] = useState(false)
     const [pageNumber, setPageNumber] = useState(1)
     const [postOptionsOpen, setPostOptionsOpen] = useState(false)
     const [post, setPost] = useState({image: '',
@@ -122,6 +123,7 @@ function PostDetail(props) {
     }
 
     const postComment = (com, uid, pid) => {
+        setCommentLoading(true)
         axios.post(API_URL + '/posts/postcomment',{
             comment: com,
             user_id: uid,
@@ -139,8 +141,10 @@ function PostDetail(props) {
                 icon: 'success',
                 title: 'Comment successfully posted!'
             })
+            setCommentLoading(false)
         }).catch((err) => {
             console.log(err)
+            setCommentLoading(false)
         })
     }
 
@@ -306,7 +310,7 @@ function PostDetail(props) {
                                 })
                             }
                             {
-                                comments.length < totalComments && 
+                                (comments.length < totalComments && !commentLoading) &&
                                 <p style={{fontSize:'14px', color:'#909090', cursor:'pointer'}}
                                 onClick={() => setPageNumber(pageNumber + 1)}>Show more comments...</p> 
                             }
