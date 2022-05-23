@@ -19,7 +19,7 @@ const CropEasy = ({ photoURL, setOpenModal, setPhotoURL, setFile }) => {
   const [error, setError] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const {id} = useSelector(state => state.userReducer)
+  const {id, username} = useSelector(state => state.userReducer)
   const token = localStorage.getItem('myTkn')
   const cropComplete = (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -64,13 +64,16 @@ const CropEasy = ({ photoURL, setOpenModal, setPhotoURL, setFile }) => {
           setLoading(false);
           dispatch(closeModal())
           window.location.pathname == '/home' && window.location.reload()
-          Swal.fire({
-            title: 'Success!',
-            text: 'You can view your post at home or your profile.',
-            icon: 'success',
-            confirmButtonText: 'Okay!',
-            confirmButtonColor: '#369a7c'
-          })
+          window.location.pathname == `/profile/${username}` && window.location.reload()
+          if(window.location.pathname != '/home' || window.location.pathname != `/profile/${username}`){
+            Swal.fire({
+              title: 'Success!',
+              text: 'You can view your post at home or your profile.',
+              icon: 'success',
+              confirmButtonText: 'Okay!',
+              confirmButtonColor: '#369a7c'
+            })
+          }
         }).catch ((error) => {
           setLoading(false);
           dispatch(closeModal())

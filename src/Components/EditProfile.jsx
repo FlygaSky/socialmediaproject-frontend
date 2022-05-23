@@ -184,7 +184,7 @@ function EditProfile(props) {
                     }
                 </div>
                 <textarea id='bio-input' onChange={bioChange} maxLength={160} rows="3" defaultValue={bio}/>
-                <button disabled={loading ? true : false} className='upperture-submit-button' onClick={() => onSubmit()}>Save</button>
+                <button disabled={loading || usernameErrorMsg} className='upperture-submit-button' onClick={() => onSubmit()}>Save</button>
             </div>
         </div>
     );
